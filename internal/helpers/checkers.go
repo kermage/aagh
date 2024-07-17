@@ -8,7 +8,7 @@ import (
 )
 
 func HooksPathCorrect(path string) bool {
-	cmd := exec.Command("git", "config", "--get", "core.hooksPath", DIR)
+	cmd := exec.Command("git", "config", "--get", "core.hooksPath")
 	cmd.Dir = path
 	val, err := cmd.Output()
 

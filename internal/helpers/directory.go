@@ -28,5 +28,5 @@ func ProjectRoot() string {
 		cobra.CheckErr("cannot determine current directory (permission denied)\n\nRun 'chmod +x ./' first before running this command")
 	}
 
-	return filepath.Join(GitDir(path), "..")
+	return filepath.Dir(GitDir(path))
 }
