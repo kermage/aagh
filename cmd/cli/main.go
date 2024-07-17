@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aagh/cmd"
+	cmd "aagh/internal/commands"
 )
 
 func main() {

@@ -1,11 +1,11 @@
-package cmd
+package commands
 
 import (
 	"os"
 	"os/exec"
 	"path/filepath"
 
-	"aagh/helpers"
+	"aagh/internal/helpers"
 
 	"github.com/spf13/cobra"
 )
