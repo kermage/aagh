@@ -14,6 +14,12 @@ var rootCmd = &cobra.Command{
 	// SilenceUsage: true,
 }
 
+func init() {
+	if !helpers.CommandExists("git") {
+		cobra.CheckErr("'git' command does not exists.\n\nMake sure it is globally available")
+	}
+}
+
 func Commander() {
 	cobra.EnableCommandSorting = false
 

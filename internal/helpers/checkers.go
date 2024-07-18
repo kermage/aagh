@@ -3,24 +3,23 @@ package helpers
 import (
 	"os"
 	"os/exec"
-	"path/filepath"
-	"strings"
 )
 
-func HooksPathCorrect(path string) bool {
-	cmd := exec.Command("git", "config", "--get", "core.hooksPath")
-	cmd.Dir = path
-	val, err := cmd.Output()
+func CommandExists(cmd string) bool {
+	_, err := exec.LookPath(cmd)
 
-	if err != nil {
-		return false
-	}
-
-	return strings.TrimSpace(string(val)) == DIR
+	return err == nil
 }
 
-func HooksDirExists(path string) bool {
-	_, err := os.Stat(filepath.Join(path, DIR))
+func DirExists(path string) bool {
+	_, err := os.Stat(path)
 
 	return !os.IsNotExist(err)
+}
+
+func GitExec(path string, args ...string) ([]byte, error) {
+	cmd := exec.Command("git", args...)
+	cmd.Dir = path
+
+	return cmd.Output()
 }

@@ -2,17 +2,24 @@ package helpers
 
 import (
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
 )
 
+func CreateDir(path string) error {
+	_, err := os.Stat(path)
+
+	if os.IsNotExist(err) {
+		return os.Mkdir(path, PERM)
+	}
+
+	return err
+}
+
 func GitDir(path string) string {
-	cmd := exec.Command("git", "rev-parse", "--absolute-git-dir")
-	cmd.Dir = path
-	res, err := cmd.Output()
+	res, err := GitExec(path, "rev-parse", "--absolute-git-dir")
 
 	if err != nil {
 		cobra.CheckErr("not a git repository (or any of the parent directories)\n\nRun 'git init' first before running this command")
