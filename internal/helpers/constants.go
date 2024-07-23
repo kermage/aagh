@@ -3,7 +3,7 @@ package helpers
 const (
 	NAME   = "aagh"
 	DIR    = "." + NAME
-	PERM   = 0755
+	KEY    = "core.hooksPath"
 	SCRIPT = `echo "Hello from $0 script"
 echo ""
 `

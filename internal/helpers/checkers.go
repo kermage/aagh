@@ -16,10 +16,3 @@ func DirExists(path string) bool {
 
 	return !os.IsNotExist(err)
 }
-
-func GitExec(path string, args ...string) ([]byte, error) {
-	cmd := exec.Command("git", args...)
-	cmd.Dir = path
-
-	return cmd.Output()
-}
