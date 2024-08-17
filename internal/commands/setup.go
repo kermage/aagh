@@ -8,6 +8,7 @@ import (
 	runner "aagh/cmd"
 	"aagh/internal/helpers"
 
+	"github.com/kermage/GO-Mods/pathinfo"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +34,13 @@ func init() {
 					return err
 				}
 
-				err = os.WriteFile(filepath.Join(hooks.Directory().FullPath(), hook), []byte(helpers.SCRIPT), 0644)
+				hookPath := pathinfo.Get(filepath.Join(hooks.Directory().FullPath(), hook))
+
+				if hookPath.Exists() {
+					continue
+				}
+
+				err = os.WriteFile(hookPath.FullPath(), []byte(helpers.SCRIPT), 0644)
 
 				if err != nil {
 					return err

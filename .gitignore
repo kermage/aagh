@@ -1,3 +1,7 @@
 /.idea/
 /.vscode/
 .DS_Store
+
+/.aagh/_/
+/cmd/cli/cli
+/cmd/runner/runner
