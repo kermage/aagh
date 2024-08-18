@@ -2,6 +2,7 @@ package commands
 
 import (
 	"aagh/internal/helpers"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
@@ -15,6 +16,7 @@ func init() {
 
 			hooks.Config().Set()
 			helpers.CreateDir(hooks.Directory().FullPath())
+			helpers.CreateDir(filepath.Join(hooks.Directory().FullPath(), "_"))
 		},
 	})
 }

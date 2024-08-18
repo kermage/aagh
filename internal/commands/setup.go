@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	runner "aagh/cmd"
 	"aagh/internal/helpers"
 
 	"github.com/spf13/cobra"
@@ -26,7 +27,13 @@ func init() {
 				cmd.Printf("Setting up '%s' hook\n", hook)
 
 				cmd.Printf("Writing script to '%s'\n", filepath.Join(hooks.Directory().FullPath(), hook))
-				err := os.WriteFile(filepath.Join(hooks.Directory().FullPath(), hook), []byte(helpers.SCRIPT), 0644)
+				err := os.WriteFile(filepath.Join(hooks.Directory().FullPath(), "_", hook), runner.Executable, 0755)
+
+				if err != nil {
+					return err
+				}
+
+				err = os.WriteFile(filepath.Join(hooks.Directory().FullPath(), hook), []byte(helpers.SCRIPT), 0644)
 
 				if err != nil {
 					return err
