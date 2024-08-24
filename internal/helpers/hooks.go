@@ -26,6 +26,16 @@ func (h *hooks) Directory() *pathinfo.PathInfo {
 	return &pi
 }
 
+func (h *hooks) Runner() *pathinfo.PathInfo {
+	pi := pathinfo.Get(filepath.Join(h.project.FullPath(), DIR, "_"))
+
+	return &pi
+}
+
+func (h *hooks) IsReady() bool {
+	return h.Directory().Exists() && h.Runner().Exists()
+}
+
 func (h *hooks) ValidRoot() bool {
-	return h.Directory().Exists() && h.Config().Correct()
+	return h.IsReady() && h.Config().Correct()
 }

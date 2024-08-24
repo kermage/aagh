@@ -28,7 +28,7 @@ func init() {
 				cmd.Printf("Setting up '%s' hook\n", hook)
 
 				cmd.Printf("Writing script to '%s'\n", filepath.Join(hooks.Directory().FullPath(), hook))
-				err := os.WriteFile(filepath.Join(hooks.Directory().FullPath(), "_", hook), runner.Executable, 0755)
+				err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), hook), runner.Executable, 0755)
 
 				if err != nil {
 					return err

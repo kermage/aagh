@@ -17,7 +17,7 @@ func init() {
 
 			fmt.Printf("Project Root: %s\n", hooks.Project().FullPath())
 			fmt.Printf("Config Path Set: %v\n", hooks.Config().Correct())
-			fmt.Printf("Hooks Directory: %v\n", helpers.DirExists(hooks.Directory().FullPath()))
+			fmt.Printf("Hooks Directory: %v\n", hooks.IsReady())
 
 			return nil
 		},
