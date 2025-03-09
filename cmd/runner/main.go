@@ -31,8 +31,12 @@ func main() {
 
 	if !hook.Stats().IsDir() {
 		out, err := helpers.ScriptExec(hook.FullPath(), args)
+		msg := strings.TrimSpace(string(out))
 
-		fmt.Println(strings.TrimSpace(string(out)))
+		if msg != "" {
+			fmt.Println(msg)
+		}
+
 		os.Exit(helpers.GetExitCode(err))
 
 		return
