@@ -9,7 +9,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use: helpers.NAME,
+	Use:     helpers.NAME,
+	Version: helpers.VERSION,
 	// SilenceErrors: true,
 	// SilenceUsage: true,
 }

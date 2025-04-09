@@ -8,3 +8,5 @@ const (
 echo ""
 `
 )
+
+var VERSION = "(untracked)"
