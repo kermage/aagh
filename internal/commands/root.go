@@ -13,12 +13,19 @@ var rootCmd = &cobra.Command{
 	Version: helpers.VERSION,
 	// SilenceErrors: true,
 	// SilenceUsage: true,
-}
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if _, found := map[string]struct{}{
+			"check": {},
+			"init":  {},
+			"setup": {},
+		}[cmd.Name()]; !found {
+			return
+		}
 
-func init() {
-	if !helpers.CommandExists("git") {
-		cobra.CheckErr("'git' command does not exists.\n\nMake sure it is globally available")
-	}
+		if !helpers.CommandExists("git") {
+			cobra.CheckErr("'git' command does not exists.\n\nMake sure it is globally available")
+		}
+	},
 }
 
 func Commander() {
