@@ -46,7 +46,11 @@ func main() {
 
 	go func(c chan result) {
 		for r := range c {
-			fmt.Println(strings.TrimSpace(r.out))
+			msg := strings.TrimSpace(r.out)
+
+			if msg != "" {
+				fmt.Println(msg)
+			}
 
 			code := helpers.GetExitCode(r.err)
 
