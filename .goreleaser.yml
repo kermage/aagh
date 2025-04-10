@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+env:
+  - CGO_ENABLED=0
+
+builds:
+  - main: ./cmd/cli
+    flags:
+      - -trimpath
+      - -buildvcs=false
+    ldflags:
+      - -s
+      - -w
+      - -buildid=
+      - -X aagh/internal/helpers.VERSION={{ .Version }}
+    hooks:
+      pre:
+        - go build -o cmd/runner/runner ./cmd/runner
+
+snapshot:
+  version_template: "{{ .ShortCommit }}"
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+
+archives:
+  - name_template: >-
+      {{- .ProjectName }}_
+      {{- .Version }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end -}}
+    format_overrides:
+      - goos: windows
+        formats: ["zip"]
