@@ -11,6 +11,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     helpers.NAME,
 	Version: helpers.VERSION,
+	Long:    "A cross-platform executable for handling Git hooks",
 	// SilenceErrors: true,
 	// SilenceUsage: true,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {

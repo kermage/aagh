@@ -1,5 +1,3 @@
-echo "Hello from $0 script"
-
 files=$(git diff --cached --name-only --diff-filter=ACM | { grep '.go$' || true; })
 [ -z "$files" ] && exit 0
 
