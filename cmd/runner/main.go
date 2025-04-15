@@ -80,6 +80,10 @@ func getHooks(path string) map[string][]string {
 	list := make(map[string][]string)
 
 	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+
 		parts := strings.SplitN(file.Name(), "-", 2)
 
 		list[parts[0]] = append(list[parts[0]], file.Name())
