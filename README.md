@@ -24,7 +24,15 @@ Use "aagh [command] --help" for more information about a command.
 
 ## Installation
 
-Download the latest released binary [here](https://github.com/kermage/aagh/releases).
+### Prepared Binaries
+
+Download the latest release [here](https://github.com/kermage/aagh/releases).
+
+### One-liner Command
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
+```
 
 ### Project Examples
 
