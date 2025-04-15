@@ -11,7 +11,7 @@ type config struct {
 }
 
 func (h *hooks) Config() *config {
-	return &config{hooks: h, runner: filepath.Join(DIR, "_")}
+	return &config{hooks: h, runner: filepath.Join(DIR, RUNNER)}
 }
 
 func (c *config) Get() string {

@@ -27,7 +27,7 @@ func (h *hooks) Directory() *pathinfo.PathInfo {
 }
 
 func (h *hooks) Runner() *pathinfo.PathInfo {
-	pi := pathinfo.Get(filepath.Join(h.project.FullPath(), DIR, "_"))
+	pi := pathinfo.Get(filepath.Join(h.project.FullPath(), DIR, RUNNER))
 
 	return &pi
 }
