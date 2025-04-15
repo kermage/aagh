@@ -10,10 +10,12 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(&cobra.Command{
+	var apply bool
+
+	command := &cobra.Command{
 		Use:   "init",
 		Short: "Initialize the repository in the current directory",
-		RunE: func(_ *cobra.Command, _ []string) error {
+		RunE: func(cmd *cobra.Command, _ []string) error {
 			hooks := helpers.Hooks(helpers.ProjectRoot())
 
 			hooks.Config().Set()
@@ -26,7 +28,24 @@ func init() {
 				return err
 			}
 
+			if apply {
+				files, _ := os.ReadDir(hooks.Directory().FullPath())
+				list := make([]string, 0)
+
+				for _, file := range files {
+					if !file.IsDir() {
+						list = append(list, file.Name())
+					}
+				}
+
+				return setupHooks(cmd, list)
+			}
+
 			return nil
 		},
-	})
+	}
+
+	command.PersistentFlags().BoolVar(&apply, "apply", false, "Setup existing hooks after")
+
+	rootCmd.AddCommand(command)
 }
