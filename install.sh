@@ -29,11 +29,11 @@ warn() {
 }
 
 error() {
-	printf '%s\n\n' "${RED}x $*${RESET}" >&2
+	printf '%s\n' "${RED}x $*${RESET}" >&2
 }
 
 success() {
-	printf '%s\n\n' "${GREEN}✓${RESET} $*"
+	printf '%s\n' "${GREEN}✓${RESET} $*"
 }
 
 
@@ -124,6 +124,7 @@ PLATFORM="$(get_goos)"
 ARCH="$(get_goarch)"
 
 printf "\n  %s\n\n" "${UNDERLINE}${BLUE}${DESCRIPTION}${RESET}"
+info "${BOLD}Version${RESET}:      ${GREEN}${VERSION}${RESET}"
 info "${BOLD}Destination${RESET}:  ${GREEN}${BIN_DIR}${RESET}"
 info "${BOLD}Platform${RESET}:     ${GREEN}${PLATFORM}${RESET}"
 info "${BOLD}Arch${RESET}:         ${GREEN}${ARCH}${RESET}"
@@ -150,8 +151,13 @@ fi
 FILE="${BIN_NAME}_${VERSION}_${TARGET}.${EXT}"
 URL="${BASE_URL}/download/v${VERSION}/${FILE}"
 
-warn "Installation in progress, please wait…"
+if [ -n "$CURRENT" ]; then
+	warn "Updating current ${MAGENTA}v${CURRENT}${YELLOW}, please wait…"
+else
+	warn "Installation in progress, please wait…"
+fi
+
 download "$FILE" "$URL"
 unpack "$FILE" "$BIN_DIR"
 rm -f "$FILE"
-success "${UNDERLINE}${BLUE}${BIN_NAME}${RESET} is now ready!"
+success "Latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET} is now ready!"
