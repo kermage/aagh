@@ -20,6 +20,9 @@ builds:
       - -w
       - -buildid=
       - -X aagh/internal/helpers.VERSION={{ .Version }}
+    env:
+      - GOOS={{ .Os }}
+      - GOARCH={{ .Arch }}
     hooks:
       pre:
         - go build -o cmd/runner/runner ./cmd/runner
