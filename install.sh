@@ -118,6 +118,8 @@ get_target() {
 	printf '%s' "$target"
 }
 
+
+CURRENT="$($BIN_NAME --version 2>/dev/null | cut -d ' ' -f3)"
 PLATFORM="$(get_goos)"
 ARCH="$(get_goarch)"
 
@@ -126,6 +128,11 @@ info "${BOLD}Destination${RESET}:  ${GREEN}${BIN_DIR}${RESET}"
 info "${BOLD}Platform${RESET}:     ${GREEN}${PLATFORM}${RESET}"
 info "${BOLD}Arch${RESET}:         ${GREEN}${ARCH}${RESET}"
 printf '\n'
+
+if [ "$CURRENT" = "$VERSION" ]; then
+	success "Already has latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET}!"
+	exit 0
+fi
 
 TARGET="$(get_target "${ARCH}" "${PLATFORM}")"
 
