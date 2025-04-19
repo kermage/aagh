@@ -33,9 +33,6 @@ func setupHooks(cmd *cobra.Command, args []string) error {
 	hooks := helpers.Hooks(helpers.ProjectRoot())
 
 	for _, hook := range args {
-		cmd.Printf("Setting up '%s' hook\n", hook)
-
-		cmd.Printf("Writing script to '%s'\n", filepath.Join(hooks.Directory().FullPath(), hook))
 		err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), hook), runner.Executable, 0755)
 
 		if err != nil {
@@ -45,6 +42,7 @@ func setupHooks(cmd *cobra.Command, args []string) error {
 		hookPath := pathinfo.Get(filepath.Join(hooks.Directory().FullPath(), hook))
 
 		if hookPath.Exists() {
+			cmd.Printf("'%s' already exists\n", filepath.Join(hooks.Directory().FullPath(), hook))
 			continue
 		}
 
@@ -53,6 +51,8 @@ func setupHooks(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return err
 		}
+
+		cmd.Printf("Added script to '%s'\n", filepath.Join(hooks.Directory().FullPath(), hook))
 	}
 
 	return nil
