@@ -119,9 +119,14 @@ get_target() {
 }
 
 
-CURRENT="$($BIN_NAME --version 2>/dev/null | cut -d ' ' -f3)"
 PLATFORM="$(get_goos)"
 ARCH="$(get_goarch)"
+CURRENT=""
+
+if has $BIN_NAME; then
+	BIN_DIR=$(dirname $(command -v $BIN_NAME))
+	CURRENT="$($BIN_NAME --version 2>/dev/null | cut -d ' ' -f3)"
+fi
 
 printf "\n  %s\n\n" "${UNDERLINE}${BLUE}${DESCRIPTION}${RESET}"
 info "${BOLD}Version${RESET}:      ${GREEN}${VERSION}${RESET}"
