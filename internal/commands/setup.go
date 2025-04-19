@@ -42,7 +42,10 @@ func setupHooks(cmd *cobra.Command, args []string) error {
 		hookPath := pathinfo.Get(filepath.Join(hooks.Directory().FullPath(), hook))
 
 		if hookPath.Exists() {
-			cmd.Printf("'%s' already exists\n", filepath.Join(hooks.Directory().FullPath(), hook))
+			if cmd.Name() == "setup" {
+				cmd.Printf("'%s' already exists\n", filepath.Join(hooks.Directory().FullPath(), hook))
+			}
+
 			continue
 		}
 
