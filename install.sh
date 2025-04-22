@@ -41,6 +41,40 @@ has() {
 	command -v "$1" 1>/dev/null 2>&1
 }
 
+writeable() {
+	path="${1}/${BIN_NAME}.tmp"
+
+	if touch "$path" 2>/dev/null; then
+		rm "$path"
+		return 0
+	else
+		return 1
+	fi
+}
+
+maybe_elevate() {
+	if writeable "$BIN_DIR"; then
+		return
+	fi
+
+	if ! has sudo; then
+		if [ "$1" = "Windows" ]; then
+			error "Please run the shell as administrator."
+		else
+			error "Please run as root or go install sudo."
+		fi
+
+		exit 1
+	fi
+
+	warn "Escalated permission required, trying…"
+
+	if ! sudo -v; then
+		error "Substitute user not granted, aborting…"
+		exit 1
+	fi
+}
+
 download() {
 	file="$1"
 	url="$2"
@@ -162,6 +196,7 @@ else
 	warn "Installation in progress, please wait…"
 fi
 
+maybe_elevate "$PLATFORM"
 download "$FILE" "$URL"
 unpack "$FILE" "$BIN_DIR"
 rm -f "$FILE"
