@@ -28,14 +28,26 @@ Use "aagh [command] --help" for more information about a command.
 
 Download the latest release [here](https://github.com/kermage/aagh/releases).
 
-### One-liner Command
+### One-liner Commands
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
 ```
 
+```sh
+wget -qO- https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
+```
+
 ### Project Examples
 
-- [GO](https://github.com/kermage/aagh/tree/main/examples/go)
-- [JS](https://github.com/kermage/aagh/tree/main/examples/js)
-- [PHP](https://github.com/kermage/aagh/tree/main/examples/php)
+- [GO](./examples/go)
+- [JS](./examples/js)
+- [PHP](./examples/php)
+
+#### Oneshot command
+
+Simplify project hooks setup
+
+```sh
+aagh init --apply
+```
