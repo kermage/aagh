@@ -21,15 +21,15 @@ MAGENTA="$(tput setaf 5 2>/dev/null || printf '')"
 
 
 info() {
-	printf '%s\n' "${BOLD}${GREY}>${RESET} $*"
+	printf '%s\n' "${BOLD}${GREY}➤ ${RESET} $*"
 }
 
 warn() {
-	printf '%s\n' "${YELLOW}! $*${RESET}"
+	printf '%s\n' "${YELLOW}ℹ︎ $*${RESET}"
 }
 
 error() {
-	printf '%s\n' "${RED}x $*${RESET}" >&2
+	printf '%s\n' "${RED}✕ $*${RESET}" >&2
 }
 
 success() {
