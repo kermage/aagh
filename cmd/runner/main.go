@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -75,9 +76,10 @@ func main() {
 	time.Sleep(time.Second)
 }
 
-func getHooks(path string) map[string][]string {
+func getHooks(path string) [][]string {
 	files, _ := os.ReadDir(path)
 	list := make(map[string][]string)
+	groups := make(map[string]string, 0)
 
 	for _, file := range files {
 		if file.IsDir() {
@@ -87,9 +89,13 @@ func getHooks(path string) map[string][]string {
 		parts := strings.SplitN(file.Name(), "-", 2)
 
 		list[parts[0]] = append(list[parts[0]], file.Name())
+
+		if _, ok := groups[parts[0]]; !ok {
+			groups[parts[0]] = parts[0]
+		}
 	}
 
-	return list
+	return sortHooks(list, groups)
 }
 
 func execHook(c chan result, wg *sync.WaitGroup, src string, args []string) {
@@ -101,4 +107,21 @@ func execHook(c chan result, wg *sync.WaitGroup, src string, args []string) {
 		out: string(out),
 		err: err,
 	}
+}
+
+func sortHooks(hooks map[string][]string, groups map[string]string) [][]string {
+	list := make([][]string, 0)
+	keys := make([]string, 0)
+
+	for key := range hooks {
+		keys = append(keys, key)
+	}
+
+	sort.Strings(keys)
+
+	for _, group := range keys {
+		list = append(list, hooks[groups[group]])
+	}
+
+	return list
 }
