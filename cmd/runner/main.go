@@ -9,7 +9,6 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	"time"
 
 	"aagh/internal/helpers"
 
@@ -44,8 +43,13 @@ func main() {
 	}
 
 	channel := make(chan result)
+	mainWG := &sync.WaitGroup{}
+
+	mainWG.Add(1)
 
 	go func(c chan result) {
+		defer mainWG.Done()
+
 		for r := range c {
 			msg := strings.TrimSpace(r.out)
 
@@ -65,15 +69,22 @@ func main() {
 		waitGroup := &sync.WaitGroup{}
 
 		for _, file := range files {
+			mainWG.Add(1)
 			waitGroup.Add(1)
 
-			go execHook(channel, waitGroup, filepath.Join(hook.FullPath(), file), args)
+			go func() {
+				defer mainWG.Done()
+				defer waitGroup.Done()
+
+				execHook(channel, filepath.Join(hook.FullPath(), file), args)
+			}()
 		}
 
 		waitGroup.Wait()
 	}
 
-	time.Sleep(time.Second)
+	close(channel)
+	mainWG.Wait()
 }
 
 func getHooks(path string) [][]string {
@@ -98,9 +109,7 @@ func getHooks(path string) [][]string {
 	return sortHooks(list, groups)
 }
 
-func execHook(c chan result, wg *sync.WaitGroup, src string, args []string) {
-	defer wg.Done()
-
+func execHook(c chan result, src string, args []string) {
 	out, err := helpers.ScriptExec(src, args)
 
 	c <- result{
