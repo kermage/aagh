@@ -23,9 +23,19 @@ builds:
     env:
       - GOOS={{ .Os }}
       - GOARCH={{ .Arch }}
+      - >
+        FLAGS=
+          -trimpath
+          -buildvcs=false
+          -o cmd/runner/runner
+      - |
+        LDFLAGS=
+          -s
+          -w
+          -buildid=
     hooks:
       pre:
-        - go build -o cmd/runner/runner ./cmd/runner
+        - go build {{ .Env.FLAGS }} -ldflags="{{ .Env.LDFLAGS }}" ./cmd/runner
 
 snapshot:
   version_template: "{{ .ShortCommit }}"
