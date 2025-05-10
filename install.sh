@@ -153,7 +153,7 @@ get_target() {
 }
 
 usage() {
-	printf '%s\n' "${BOLD}Usage${RESET}:    ${BLUE}$(basename $0)${RESET} ${MAGENTA}[options]${RESET}"
+	printf '%s\n' "${BOLD}Usage${RESET}:    ${BLUE}$0${RESET} ${MAGENTA}[options]${RESET}"
 	printf '%s\n' "${BOLD}Options${RESET}:"
 	printf '%s\n' "  -b, --bin-dir ${GREEN}<path>${RESET}  Set the destination directory"
 	printf '%s\n' "  -h, --help            Show this help message"

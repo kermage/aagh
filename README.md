@@ -38,6 +38,18 @@ curl -fsSL https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
 wget -qO- https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
 ```
 
+#### Custom Bin Directory
+
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/kermage/aagh/main/install.sh)" -- -b <path>
+```
+
+```sh
+sh -c "$(wget -qO- https://raw.githubusercontent.com/kermage/aagh/main/install.sh)" -- -b <path>
+```
+
+*\* Make sure `<path>` exists and is writeable. Directory creation is intentionally not implemented.*
+
 ### Project Examples
 
 - [GO](./examples/go)
