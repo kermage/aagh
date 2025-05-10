@@ -153,14 +153,15 @@ get_target() {
 }
 
 usage() {
-	printf '%s\n' "${BOLD}Usage${RESET}:    ${BLUE}$0${RESET} ${MAGENTA}[options]${RESET}"
+	if [ "${1:-0}" == "1" ]; then
+		printf "%s\n" "${UNDERLINE}${BLUE}Download and optionally run ${BIN_NAME}${RESET}"
+	fi
+
+	printf '\n%s\n' "${BOLD}Usage${RESET}:    ${BLUE}$0${RESET} ${MAGENTA}[options]${RESET} ${GREY}[command]${RESET}"
 	printf '%s\n' "${BOLD}Options${RESET}:"
 	printf '%s\n' "  -b, --bin-dir ${GREEN}<path>${RESET}  Set the destination directory"
 	printf '%s\n' "  -h, --help            Show this help message"
-
-	if [ "${1:-0}" != "1" ]; then
-		printf '\n'
-	fi
+	printf '\n%s\n' "$(info "${GREY}[command]${RESET} is executed if specified.")"
 }
 
 
@@ -175,17 +176,19 @@ if has $BIN_NAME; then
 	CURRENT_BIN_DIR="$BIN_DIR"
 fi
 
+printf "\n  "
+
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	-h | --help) usage 1 && exit 0 ;;
 	-b | --bin-dir) BIN_DIR="$2" && shift 2 ;;
 	-b=* | --bin-dir=*) BIN_DIR="${1#*=}" && shift 1 ;;
-	-*) usage && error "Unknown option: $1" && exit 1 ;;
+	-*) error "Unknown option: $1" && usage && exit 1 ;;
 	*) break ;;
 	esac
 done
 
-printf "\n  %s\n\n" "${UNDERLINE}${BLUE}${DESCRIPTION}${RESET}"
+printf "%s\n\n" "${UNDERLINE}${BLUE}${DESCRIPTION}${RESET}"
 info "${BOLD}Version${RESET}:      ${GREEN}${VERSION}${RESET}"
 info "${BOLD}Destination${RESET}:  ${GREEN}${BIN_DIR}${RESET}"
 info "${BOLD}Platform${RESET}:     ${GREEN}${PLATFORM}${RESET}"
