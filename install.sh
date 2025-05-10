@@ -167,10 +167,12 @@ usage() {
 PLATFORM="$(get_goos)"
 ARCH="$(get_goarch)"
 CURRENT=""
+CURRENT_BIN_DIR=""
 
 if has $BIN_NAME; then
 	BIN_DIR=$(dirname $(command -v $BIN_NAME))
 	CURRENT="$($BIN_NAME --version 2>/dev/null | cut -d ' ' -f3)"
+	CURRENT_BIN_DIR="$BIN_DIR"
 fi
 
 while [ "$#" -gt 0 ]; do
@@ -216,7 +218,7 @@ fi
 FILE="${BIN_NAME}_${VERSION}_${TARGET}.${EXT}"
 URL="${BASE_URL}/download/v${VERSION}/${FILE}"
 
-if [ -n "$CURRENT" ]; then
+if [ -n "$CURRENT" ] && [ "$CURRENT_BIN_DIR" = "$BIN_DIR" ]; then
 	warn "Updating current ${MAGENTA}v${CURRENT}${YELLOW}, please wait…"
 else
 	warn "Installation in progress, please wait…"
