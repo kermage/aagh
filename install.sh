@@ -201,6 +201,11 @@ if [ ! -d "$BIN_DIR" ]; then
 	exit 1
 fi
 
+if [ -f "${BIN_DIR}/${BIN_NAME}" ]; then
+	CURRENT="$(${BIN_DIR}/${BIN_NAME} --version 2>/dev/null | cut -d ' ' -f3)"
+	CURRENT_BIN_DIR="$BIN_DIR"
+fi
+
 if [ "$CURRENT" = "$VERSION" ]; then
 	success "Already has latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET}!"
 
