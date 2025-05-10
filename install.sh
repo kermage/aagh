@@ -203,6 +203,11 @@ fi
 
 if [ "$CURRENT" = "$VERSION" ]; then
 	success "Already has latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET}!"
+
+	if [ -n "${1+n}" ]; then
+		"${BIN_DIR}/${BIN_NAME}" "$@"
+	fi
+
 	exit 0
 fi
 
