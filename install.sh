@@ -152,6 +152,17 @@ get_target() {
 	printf '%s' "$target"
 }
 
+usage() {
+	printf '%s\n' "${BOLD}Usage${RESET}:    ${BLUE}$(basename $0)${RESET} ${MAGENTA}[options]${RESET}"
+	printf '%s\n' "${BOLD}Options${RESET}:"
+	printf '%s\n' "  -b, --bin-dir ${GREEN}<path>${RESET}  Set the destination directory"
+	printf '%s\n' "  -h, --help            Show this help message"
+
+	if [ "${1:-0}" != "1" ]; then
+		printf '\n'
+	fi
+}
+
 
 PLATFORM="$(get_goos)"
 ARCH="$(get_goarch)"
@@ -164,9 +175,10 @@ fi
 
 while [ "$#" -gt 0 ]; do
 	case "$1" in
+	-h | --help) usage 1 && exit 0 ;;
 	-b | --bin-dir) BIN_DIR="$2" && shift 2 ;;
 	-b=* | --bin-dir=*) BIN_DIR="${1#*=}" && shift 1 ;;
-	*) error "Unknown option: $1" && exit 1 ;;
+	*) usage && error "Unknown option: $1" && exit 1 ;;
 	esac
 done
 
