@@ -177,6 +177,12 @@ info "${BOLD}Platform${RESET}:     ${GREEN}${PLATFORM}${RESET}"
 info "${BOLD}Arch${RESET}:         ${GREEN}${ARCH}${RESET}"
 printf '\n'
 
+if [ ! -d "$BIN_DIR" ]; then
+	error "Destination does not appear to be a directory."
+	warn "Make sure ${BIN_DIR} exists and is writeable."
+	exit 1
+fi
+
 if [ "$CURRENT" = "$VERSION" ]; then
 	success "Already has latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET}!"
 	exit 0
