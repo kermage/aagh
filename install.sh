@@ -162,6 +162,14 @@ if has $BIN_NAME; then
 	CURRENT="$($BIN_NAME --version 2>/dev/null | cut -d ' ' -f3)"
 fi
 
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+	-b | --bin-dir) BIN_DIR="$2" && shift 2 ;;
+	-b=* | --bin-dir=*) BIN_DIR="${1#*=}" && shift 1 ;;
+	*) error "Unknown option: $1" && exit 1 ;;
+	esac
+done
+
 printf "\n  %s\n\n" "${UNDERLINE}${BLUE}${DESCRIPTION}${RESET}"
 info "${BOLD}Version${RESET}:      ${GREEN}${VERSION}${RESET}"
 info "${BOLD}Destination${RESET}:  ${GREEN}${BIN_DIR}${RESET}"
