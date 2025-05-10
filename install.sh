@@ -180,7 +180,8 @@ while [ "$#" -gt 0 ]; do
 	-h | --help) usage 1 && exit 0 ;;
 	-b | --bin-dir) BIN_DIR="$2" && shift 2 ;;
 	-b=* | --bin-dir=*) BIN_DIR="${1#*=}" && shift 1 ;;
-	*) usage && error "Unknown option: $1" && exit 1 ;;
+	-*) usage && error "Unknown option: $1" && exit 1 ;;
+	*) break ;;
 	esac
 done
 
@@ -229,3 +230,7 @@ download "$FILE" "$URL"
 unpack "$FILE" "$BIN_DIR"
 rm -f "$FILE"
 success "Latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET} is now ready!"
+
+if [ -n "${1+n}" ]; then
+	"${BIN_DIR}/${BIN_NAME}" "$@"
+fi
