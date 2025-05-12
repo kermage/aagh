@@ -1,4 +1,4 @@
-# aagh --
+# aagh -- ![GitHub License](https://img.shields.io/github/license/kermage/aagh) ![GitHub Release](https://img.shields.io/github/v/release/kermage/aagh) ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/kermage/aagh/total)
 
 > To the betterment of a project: no more **"team, please lint and test"** and **"it works on my machine"**. _Hopefully_.
 
@@ -11,6 +11,7 @@ Usage:
 Available Commands:
   check       Check the repository status in the current directory
   init        Initialize the repository in the current directory
+  run         Run a hook in the repository of current directory
   setup       Setup a hook in the repository of current directory
   help        Help about any command
   completion  Generate the autocompletion script for the specified shell
@@ -37,6 +38,8 @@ curl -fsSL https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
 ```sh
 wget -qO- https://raw.githubusercontent.com/kermage/aagh/main/install.sh | sh
 ```
+
+*Default install path: `/usr/local/bin`*
 
 #### Custom Bin Directory
 
