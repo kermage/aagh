@@ -153,7 +153,7 @@ get_target() {
 }
 
 usage() {
-	if [ "${1:-0}" == "1" ]; then
+	if [ "${1:-0}" = "1" ]; then
 		printf "%s\n" "${UNDERLINE}${BLUE}Download and optionally run ${BIN_NAME}${RESET}"
 	fi
 
