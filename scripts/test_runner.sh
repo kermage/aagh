@@ -37,4 +37,4 @@ else
 	create ""
 fi
 
-git checkout > /dev/null
+go run $PROJECT_ROOT/cmd/cli/main.go run $HOOK_NAME
