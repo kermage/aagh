@@ -2,7 +2,7 @@
 
 set -eu
 
-VERSION="0.5.0"
+VERSION="0.6.0"
 BIN_NAME="aagh"
 BIN_DIR="/usr/local/bin"
 BASE_URL="https://github.com/kermage/aagh/releases"
