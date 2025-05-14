@@ -5,7 +5,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 
 	"aagh/internal/helpers"
 
@@ -34,17 +33,12 @@ func init() {
 
 			cmd := exec.Command(hookPath.FullPath())
 			cmd.Dir = helpers.ProjectRoot()
-			res, err := cmd.CombinedOutput()
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			err := cmd.Run()
 
 			if err != nil {
-				fmt.Fprintln(os.Stderr, string(res))
 				os.Exit(helpers.GetExitCode(err))
-			}
-
-			msg := strings.TrimSpace(string(res))
-
-			if msg != "" {
-				fmt.Println(msg)
 			}
 
 			return nil
