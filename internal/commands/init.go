@@ -28,6 +28,8 @@ func init() {
 				return err
 			}
 
+			cmd.Printf("%s! '%s' is now ready.\n", helpers.NAME, hooks.Project().FullPath())
+
 			if apply {
 				files, _ := os.ReadDir(hooks.Directory().FullPath())
 				list := make([]string, 0)

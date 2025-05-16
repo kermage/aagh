@@ -21,7 +21,7 @@ func init() {
 			hooks := helpers.Hooks(helpers.ProjectRoot())
 
 			if !hooks.ValidRoot() {
-				cobra.CheckErr(fmt.Sprintf("'%s' is not initialized.\n\nRun '%s init' first before setting up hooks.\n", hooks.Project().FullPath(), helpers.NAME))
+				cobra.CheckErr(fmt.Sprintf("'%s' is not ready.\n\nRun '%s init' first before testing out a hook.\n", hooks.Project().FullPath(), helpers.NAME))
 			}
 
 			hookName := args[0]

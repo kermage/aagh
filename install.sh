@@ -210,6 +210,7 @@ if [ "$CURRENT" = "$VERSION" ]; then
 	success "Already has latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET}!"
 
 	if [ -n "${1+n}" ]; then
+		printf '\n'
 		"${BIN_DIR}/${BIN_NAME}" "$@"
 	fi
 
@@ -245,5 +246,6 @@ rm -f "$FILE"
 success "Latest ${UNDERLINE}${BLUE}${BIN_NAME}${RESET} is now ready!"
 
 if [ -n "${1+n}" ]; then
+	printf '\n'
 	"${BIN_DIR}/${BIN_NAME}" "$@"
 fi
