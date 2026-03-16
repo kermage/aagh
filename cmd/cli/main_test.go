@@ -1,8 +1,6 @@
 package main
 
 import (
-	"aagh/internal/helpers"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -10,18 +8,7 @@ import (
 )
 
 func TestCommands(t *testing.T) {
-	tempDir, err := os.MkdirTemp("", "")
-
-	if err != nil {
-		t.Fatalf("Could not create temporary directory: %s", err)
-	}
-
-	t.Logf("Temporary directory: %s", tempDir)
-
-	defer func() {
-		_ = os.Remove(tempDir)
-	}()
-
+	tempDir := t.TempDir()
 	_, file, _, _ := runtime.Caller(0)
 	currentDir := filepath.Dir(file)
 
@@ -44,15 +31,11 @@ func TestCommands(t *testing.T) {
 			_, err := cmd.Output()
 
 			if workDir.isGit && err != nil {
-				t.Logf("Command '%s' should not have failed in '%s'", command, workDir.path)
+				t.Errorf("Command '%s' should not have failed in '%s': %v", command, workDir.path, err)
 			}
 
 			if !workDir.isGit && err == nil {
-				t.Logf("Command '%s' should have failed in '%s'", command, workDir.path)
-			}
-
-			if command == "setup" {
-				os.Remove(filepath.Join(currentDir, "../..", helpers.DIR, "test"))
+				t.Errorf("Command '%s' should have failed in '%s'", command, workDir.path)
 			}
 		}
 	}
