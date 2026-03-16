@@ -42,6 +42,15 @@ func TestCreateDir(t *testing.T) {
 				}
 			},
 		},
+		{
+			name: "file exists at path",
+			setup: func() string {
+				file := filepath.Join(tmpDir, "file.txt")
+				_ = os.WriteFile(file, []byte("test"), PermReadWrite)
+				return file
+			},
+			wantErr: true, // MkdirAll fails if a file exists at the path
+		},
 	}
 
 	for _, tt := range tests {

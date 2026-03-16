@@ -12,7 +12,17 @@ func CommandExists(cmd string) bool {
 }
 
 func DirExists(path string) bool {
-	_, err := os.Stat(path)
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return err == nil && info.IsDir()
+}
 
-	return !os.IsNotExist(err)
+func FileExists(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return err == nil && !info.IsDir()
 }

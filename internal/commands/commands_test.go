@@ -127,7 +127,7 @@ func TestInitCommandLogic(t *testing.T) {
 	}
 
 	gitignorePath := filepath.Join(hooks.Runner().FullPath(), ".gitignore")
-	if !helpers.DirExists(gitignorePath) {
+	if !helpers.FileExists(gitignorePath) {
 		t.Error(".gitignore was not created in runner directory")
 	}
 }
@@ -167,11 +167,11 @@ func TestSetupHooksLogic(t *testing.T) {
 	}
 
 	// Verify setup
-	if !helpers.DirExists(runnerHookPath) {
+	if !helpers.FileExists(runnerHookPath) {
 		t.Error("runner hook was not created")
 	}
 
-	if !helpers.DirExists(hookPath) {
+	if !helpers.FileExists(hookPath) {
 		t.Error("hook script was not created")
 	}
 }
@@ -202,7 +202,7 @@ func TestRunCommandLogic(t *testing.T) {
 		t.Fatalf("failed to create runner hook: %v", err)
 	}
 
-	if !helpers.DirExists(runnerHookPath) {
+	if !helpers.FileExists(runnerHookPath) {
 		t.Fatal("runner hook does not exist")
 	}
 

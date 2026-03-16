@@ -9,13 +9,11 @@ import (
 )
 
 func CreateDir(path string) error {
-	_, err := os.Stat(path)
-
-	if os.IsNotExist(err) {
-		return os.Mkdir(path, PermExecutable)
+	if DirExists(path) {
+		return nil
 	}
 
-	return err
+	return os.MkdirAll(path, PermExecutable)
 }
 
 func GitDir(path string) string {
