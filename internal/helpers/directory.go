@@ -12,7 +12,7 @@ func CreateDir(path string) error {
 	_, err := os.Stat(path)
 
 	if os.IsNotExist(err) {
-		return os.Mkdir(path, 0755)
+		return os.Mkdir(path, PermExecutable)
 	}
 
 	return err

@@ -33,7 +33,7 @@ func setupHooks(cmd *cobra.Command, args []string) error {
 	hooks := helpers.Hooks(helpers.ProjectRoot())
 
 	for _, hook := range args {
-		err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), hook), runner.Executable, 0755)
+		err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), hook), runner.Executable, helpers.PermExecutable)
 
 		if err != nil {
 			return err
@@ -49,7 +49,7 @@ func setupHooks(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
-		err = os.WriteFile(hookPath.FullPath(), []byte(helpers.SCRIPT), 0644)
+		err = os.WriteFile(hookPath.FullPath(), []byte(helpers.SCRIPT), helpers.PermReadWrite)
 
 		if err != nil {
 			return err

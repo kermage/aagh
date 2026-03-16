@@ -8,6 +8,9 @@ const (
 	SCRIPT = `echo "Hello from $0 script"
 echo ""
 `
+	// File permissions
+	PermExecutable = 0755
+	PermReadWrite  = 0644
 )
 
 var VERSION = "(untracked)"

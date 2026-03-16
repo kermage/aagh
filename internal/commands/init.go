@@ -22,7 +22,7 @@ func init() {
 			helpers.CreateDir(hooks.Directory().FullPath())
 			helpers.CreateDir(hooks.Runner().FullPath())
 
-			err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), ".gitignore"), []byte("*"), 0644)
+			err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), ".gitignore"), []byte("*"), helpers.PermReadWrite)
 
 			if err != nil {
 				return err
