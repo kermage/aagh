@@ -16,7 +16,7 @@ func init() {
 		Use:   "init",
 		Short: "Initialize the repository in the current directory",
 		RunE: func(cmd *cobra.Command, _ []string) error {
-			hooks := helpers.Hooks(helpers.ProjectRoot())
+			hooks := helpers.ProjectHooks()
 
 			hooks.Config().Set()
 			helpers.CreateDir(hooks.Directory().FullPath())

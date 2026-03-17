@@ -18,7 +18,7 @@ func init() {
 		Short: "Setup a hook in the repository of current directory",
 		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			hooks := helpers.Hooks(helpers.ProjectRoot())
+			hooks := helpers.ProjectHooks()
 
 			if !hooks.ValidRoot() {
 				cobra.CheckErr(fmt.Sprintf("'%s' is not initialized.\n\nRun '%s init' first before setting up hooks.\n", hooks.Project().FullPath(), helpers.NAME))
@@ -30,7 +30,7 @@ func init() {
 }
 
 func setupHooks(cmd *cobra.Command, args []string) error {
-	hooks := helpers.Hooks(helpers.ProjectRoot())
+	hooks := helpers.ProjectHooks()
 
 	for _, hook := range args {
 		err := os.WriteFile(filepath.Join(hooks.Runner().FullPath(), hook), runner.Executable, helpers.PermExecutable)

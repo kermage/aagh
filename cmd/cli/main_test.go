@@ -1,10 +1,13 @@
 package main
 
 import (
+	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"testing"
+
+	"aagh/internal/helpers"
 )
 
 func TestCommands(t *testing.T) {
@@ -23,6 +26,15 @@ func TestCommands(t *testing.T) {
 			args := []string{"run", filepath.Join(currentDir, "main.go"), command}
 
 			if command == "setup" {
+				if workDir.path == currentDir {
+					defer func() {
+						hooks := helpers.ProjectHooks()
+
+						os.Remove(filepath.Join(hooks.Directory().FullPath(), "test"))
+						os.Remove(filepath.Join(hooks.Runner().FullPath(), "test"))
+					}()
+				}
+
 				args = append(args, "test")
 			}
 

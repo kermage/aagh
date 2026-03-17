@@ -18,7 +18,7 @@ func init() {
 		Short: "Run a hook in the repository of current directory",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(_ *cobra.Command, args []string) error {
-			hooks := helpers.Hooks(helpers.ProjectRoot())
+			hooks := helpers.ProjectHooks()
 
 			if !hooks.ValidRoot() {
 				cobra.CheckErr(fmt.Sprintf("'%s' is not ready.\n\nRun '%s init' first before testing out a hook.\n", hooks.Project().FullPath(), helpers.NAME))
@@ -32,7 +32,7 @@ func init() {
 			}
 
 			cmd := exec.Command(hookPath.FullPath())
-			cmd.Dir = helpers.ProjectRoot()
+			cmd.Dir = hooks.Project().FullPath()
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			err := cmd.Run()

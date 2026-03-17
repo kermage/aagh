@@ -13,7 +13,7 @@ func init() {
 		Use:   "check",
 		Short: "Check the repository status in the current directory",
 		RunE: func(_ *cobra.Command, _ []string) error {
-			hooks := helpers.Hooks(helpers.ProjectRoot())
+			hooks := helpers.ProjectHooks()
 
 			fmt.Printf("Project Root: %s\n", hooks.Project().FullPath())
 			fmt.Printf("Config Path Set: %v\n", hooks.Config().Correct())

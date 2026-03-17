@@ -26,12 +26,12 @@ func GitDir(path string) string {
 	return strings.TrimSpace(string(res))
 }
 
-func ProjectRoot() string {
+func ProjectHooks() *hooks {
 	path, err := os.Getwd()
 
 	if err != nil {
 		cobra.CheckErr("cannot determine current directory (permission denied)\n\nRun 'chmod +x ./' first before running this command")
 	}
 
-	return filepath.Dir(GitDir(path))
+	return Hooks(filepath.Dir(GitDir(path)))
 }

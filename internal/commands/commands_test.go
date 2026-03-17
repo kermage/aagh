@@ -79,7 +79,7 @@ func TestCheckCommandLogic(t *testing.T) {
 				t.Fatalf("failed to change directory: %v", err)
 			}
 
-			hooks := helpers.Hooks(helpers.ProjectRoot())
+			hooks := helpers.ProjectHooks()
 
 			if hooks.IsReady() != tt.expectReady {
 				t.Errorf("IsReady() = %v; want %v", hooks.IsReady(), tt.expectReady)
@@ -103,7 +103,7 @@ func TestInitCommandLogic(t *testing.T) {
 		t.Fatalf("failed to change directory: %v", err)
 	}
 
-	hooks := helpers.Hooks(helpers.ProjectRoot())
+	hooks := helpers.ProjectHooks()
 
 	hooks.Config().Set()
 	helpers.CreateDir(hooks.Directory().FullPath())
@@ -143,7 +143,7 @@ func TestSetupHooksLogic(t *testing.T) {
 		t.Fatalf("failed to change directory: %v", err)
 	}
 
-	hooks := helpers.Hooks(helpers.ProjectRoot())
+	hooks := helpers.ProjectHooks()
 
 	hooks.Config().Set()
 	helpers.CreateDir(hooks.Directory().FullPath())
@@ -187,7 +187,7 @@ func TestRunCommandLogic(t *testing.T) {
 		t.Fatalf("failed to change directory: %v", err)
 	}
 
-	hooks := helpers.Hooks(helpers.ProjectRoot())
+	hooks := helpers.ProjectHooks()
 
 	// Initialize and setup
 	hooks.Config().Set()
@@ -207,7 +207,7 @@ func TestRunCommandLogic(t *testing.T) {
 	}
 
 	cmd := exec.Command(runnerHookPath)
-	cmd.Dir = helpers.ProjectRoot()
+	cmd.Dir = hooks.Project().FullPath()
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
@@ -259,7 +259,7 @@ func TestValidRootCheck(t *testing.T) {
 				t.Fatalf("failed to change directory: %v", err)
 			}
 
-			hooks := helpers.Hooks(helpers.ProjectRoot())
+			hooks := helpers.ProjectHooks()
 			got := hooks.ValidRoot()
 
 			if got != tt.wantValid {

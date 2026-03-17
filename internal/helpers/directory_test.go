@@ -104,9 +104,10 @@ func TestGitDir(t *testing.T) {
 	}
 }
 
-func TestProjectRoot(t *testing.T) {
-	t.Run("returns project root", func(t *testing.T) {
-		root := ProjectRoot()
+func TestProjectHooks(t *testing.T) {
+	t.Run("returns project hooks", func(t *testing.T) {
+		hooks := ProjectHooks()
+		root := hooks.Project().FullPath()
 
 		if root == "" {
 			t.Error("ProjectRoot() returned empty string")
